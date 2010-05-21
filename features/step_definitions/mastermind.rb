@@ -2,6 +2,10 @@ def messages_should_include(message)
   @messenger.string.split("\n").should include(message)
 end
 
+def messages_should_not_match(message)
+  @messenger.string.split("\n").each { |m| m.should_not match(message) }
+end
+
 Given /^I am not yet playing$/ do
 end
 
@@ -42,3 +46,12 @@ end
 Then /^the game should be over$/ do
   @game.should be_over
 end
+
+Then /^the game should not be over$/ do
+  @game.should_not be_over
+end
+
+Then /^I should not see a message with "([^\"]*)"$/ do |message|
+  messages_should_not_match(message)
+end
+

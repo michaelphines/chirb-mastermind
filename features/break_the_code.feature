@@ -14,9 +14,19 @@ Feature: break the code
 	Scenario: break the code on the 2nd guess
 		When the secret code is r g y b
 		When I guess r g y c
-		And I guess r g y b
+		Then I should see the message "Enter guess (bcgryw) or 'exit':"
+		When I guess r g y b
 		Then the game should be over
 		And I should see the message "Congratulations! You broke the code in 2 guesses."
+
+	Scenario: don't break the code
+		When the secret code is r g y b
+		When I guess r g y c
+		Then I should see the message "Enter guess (bcgryw) or 'exit':"
+		When I guess r g b y
+		Then I should see the message "Enter guess (bcgryw) or 'exit':"
+		And the game should not be over
+		And I should not see a message with "You broke the code"
 
 	Scenario Outline: break the code on 3 or more guesses
 		When I break the code on on the 3rd guess
